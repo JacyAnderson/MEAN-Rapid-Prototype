@@ -1,12 +1,12 @@
 {
-  "name": "MEAN",
+  "name": "devshop",
+  "description": "",
+  "main": "",
   "authors": [
     "JacyAnderson <jacyjamesanderson@gmail.com>"
   ],
-  "description": "",
-  "main": "",
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/JacyAnderson/MEAN-Rapid-Prototype",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -15,7 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.6.4",
-    "angular-ui-router": "^0.4.2"
+    "angular": "^1.6.4"
   }
 }

@@ -7,10 +7,10 @@
 	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- require angular -->
-	<script src="/bower_components/angular/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 
 	<!-- connect app.js -->
-	<script src="/app.js"></script>
+	<script src="/javascripts/angularApp.js"></script>
 
 	<!-- connect ui.router -->
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
@@ -43,7 +43,7 @@
 				</span>
 			</span>
 			<span>
-				<a href="#!/posts/{{$index}}">Comments</a>
+				<a href="#/posts/{{post._id}}">Comments</a>
 			</span>
 		</div>
 
@@ -60,41 +60,41 @@
 		</form>
 	</script>
 
-  <!-- inline template for Posts -->
-  <script type="text/ng-template" id="/posts.html">
-  	<div class="page-header">
-  		<h3>
-  			<a ng-show="post.link" 
-  			="{{post.link}}">
-  				{{post.title}}
-  			</a>
-  			<span ng-hide="post.link">
-  				{{post.title}}
-  			</span>
-  		</h3>
-  	</div>
+	<!-- inline template for Posts -->
+	<script type="text/ng-template" id="/posts.html">
+		<div class="page-header">
+			<h3>
+				<a ng-show="post.link" 
+				="{{post.link}}">
+				{{post.title}}
+			</a>
+			<span ng-hide="post.link">
+				{{post.title}}
+			</span>
+		</h3>
+	</div>
 
-  	<div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
-  		<span class="glyphicon glyphicon-thumbs-up"
-  		ng-click="incrementUpvotes(comment)"></span>
-  		{{comment.upvotes}} - by {{comment.author}}
-  		<span style="font-size:20px; margin-left:10px;">
-  			{{comment.body}}
-  		</span>
-  	</div>
-  	  <form ng-submit="addComment()"
-    style="margin-top:30px;">
-    <h3>Add a new comment</h3>
+	<div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
+		<span class="glyphicon glyphicon-thumbs-up"
+		ng-click="incrementUpvotes(comment)"></span>
+		{{comment.upvotes}} - by {{comment.author}}
+		<span style="font-size:20px; margin-left:10px;">
+			{{comment.body}}
+		</span>
+	</div>
+	<form ng-submit="addComment()"
+	style="margin-top:30px;">
+	<h3>Add a new comment</h3>
 
-    <!-- form template -->
-    <div class="form-group">
-    	<input type="text"
-    	class="form-control"
-    	placeholder="Comment"
-    	ng-model="body"></input>
-    </div>
-    <button type="submit" class="btn btn-primary">Post</button>
-  </form>
-  </script>
+	<!-- form template -->
+	<div class="form-group">
+		<input type="text"
+		class="form-control"
+		placeholder="Comment"
+		ng-model="body"></input>
+	</div>
+	<button type="submit" class="btn btn-primary">Post</button>
+</form>
+</script>
 </body>
 </html>

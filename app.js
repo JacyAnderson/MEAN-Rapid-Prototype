@@ -1,80 +1,52 @@
-angular.module('news', ['ui.router'])
-.config([
-	'$stateProvider',
-	'$urlRouterProvider',
-	function($stateProvider, $urlRouterProvider) {
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
-		$stateProvider
-		.state('home', {
-			url: '/home',
-			templateUrl: '/home.html',
-			controller: 'MainController'
-		})
-		.state('posts', {
-			url: '/posts/{id}',
-			templateUrl: '/posts.html',
-			controller: 'PostsController'
-		});
+mongoose.connect('mongodb://localhost/devshop');
 
-      // if route doesn't exist, redirect home
-      $urlRouterProvider.otherwise('home');
-    }])
+require('./models/Posts');
+require('./models/Comments');
 
-// Posts Factory
-.factory('posts', [function() {
-	var object = {
-		posts: []
-	};
-	return object;
-}])
+var routes = require('./routes/index');
+// var users = require('./routes/users');
 
-// Main controller
-.controller('MainController', [
-	'$scope', 
-	'posts',
-	function($scope, posts) {
-		$scope.test = 'Hello world!',
-		$scope.posts = posts.posts;
+var app = express();
 
-		$scope.addPost = function() {
-			if ($scope.title === '') { return; }
-			$scope.posts.push({
-				title: $scope.title,
-				link: $scope.link,
-				upvotes: 0,
-				comments: [
-				{author: 'Joe', body: 'Cool post!', upvotes: 0},
-				{author: 'Bob', body: 'Great idea but everything is wrong!', upvotes: 0}
-				]
-			});
-			$scope.title = '';
-			$scope.link = '';
-		};
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
- 		// Adds upvotes on click 
- 		$scope.incrementUpvotes = function(post) {
- 			post.upvotes += 1;
- 		};	
- 	}])
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-.controller('PostsController', [
-	'$scope',
-	'$stateParams',
-	'posts',
-	function($scope, $stateParams, posts) {
-		$scope.post = posts.posts[$stateParams.id];
+app.use('/', index);
+// app.use('/users', users);
 
-    // adds comments from form
-		$scope.addComment = function() {
-			if ($scope.body === '') { return; }
-			$scope.post.comments.push({
-				body: $scope.body,
-				link: 'user',
-				upvotes: 0
-			});
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
-			// Reset comment body
-			$scope.body = "";
-		}
-	}
-]);
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+module.exports = app;
