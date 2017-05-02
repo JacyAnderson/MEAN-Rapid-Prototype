@@ -1,8 +1,49 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px Verdana, Helvetica, Arial, sans-serif;
 }
 
+
+/* Bootstrap Overrides */
 a {
-  color: #00B7FF;
+    color: white;
+    text-decoration: none;
 }
+
+/* changes comment link color*/
+.comments a, .comments{
+  color: black;
+  font-size: 15px;
+}
+
+/* edits entire navbar*/
+.navbar {
+	height: 60px;
+}
+
+/* edits navbar brand*/
+a.navbar-brand {
+	font-size: 30px;
+	padding: 15px 0 15px 15px;
+}
+
+/* changes distance between link and glyphicon*/
+a.ng-binding {
+	padding-left: 10px;
+}
+
+/*edits main Post button*/
+.btn-primary {
+	margin-bottom: 10px;
+}
+
+/*edits margin for new post box*/
+.new-post {
+	margin-top: 0px !important;
+}
+
+/*edits post title on comments page for visibility*/
+.post-title {
+	color: blue;
+}
+

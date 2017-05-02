@@ -19,4 +19,3 @@ ui-router ( I included it because I couldn't figure my file structure out)
 
 ### Incompleted: 
 #### Implementing passport for user signup
-Sexy styling
