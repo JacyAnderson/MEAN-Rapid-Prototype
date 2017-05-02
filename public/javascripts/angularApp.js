@@ -62,6 +62,24 @@ angular.module('news', ['ui.router'])
   	  });
   };
   
+  // SHOW one post by id, then return the responded data
+  object.get = function(id) {
+  	return $http.get('/posts/' + id).then(function(res) {
+  		return res.data;
+  	});
+  };
+
+  // POST a comment to the database
+  object.addComment = function(id, comment) {
+  	return $http.post('/posts/' + id + '/comments', comment);
+  };
+  
+  object.upvoteComment = function(post, comment) {
+  	return $http.put('/posts/' + post._id + '/comments/'+ comment._id + '/upvote')
+  	.success(function(data) {
+  		comment.upvotes += 1;
+  	});
+  };
 	return object;
 }])
 
@@ -92,22 +110,27 @@ angular.module('news', ['ui.router'])
 
 .controller('PostsController', [
 	'$scope',
-	'$stateParams',
 	'posts',
-	function($scope, $stateParams, posts) {
-		$scope.post = posts.posts[$stateParams.id];
+	'post',
+	function($scope, posts, post) {
+		$scope.post = post;
 
     // adds comments from form
     $scope.addComment = function() {
     	if ($scope.body === '') { return; }
-    	$scope.post.comments.push({
+    	posts.addComment(post._id, {
     		body: $scope.body,
     		link: 'user',
-    		upvotes: 0
+    	}).success(function(comment){
+    		$scope.post.comments.push(comment);
     	});
 
 			// Reset comment body
 			$scope.body = "";
-		}
+		};
+
+		$scope.incrementUpvotes = function(comment) {
+			posts.upvoteComment(post, comment);
+		};
 	}
 ]);
