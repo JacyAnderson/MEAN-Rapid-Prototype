@@ -65,6 +65,7 @@ router.get('/posts/:post', function(req, res, next) {
 
 // UPDATE post's upvotes
 router.put('/posts/:post/upvote', function(req, res, next) {
+  console.log('in update comment\'s upvotes');
 	req.post.upvote(function(err, post) {
 		if (err) { return next(err); }
 		res.json(post);
@@ -88,14 +89,23 @@ router.post('/posts/:post/comments', function(req, res, next) {
   });
 });
 
-// upvote a comment
+// TEST ROUTE
 router.put('/posts/:post/comments/:comment/upvote', function(req, res, next) {
-  req.comment.upvote(function(err, comment){
+  console.log('put route has been hit');
+  req.comment.upvote(function(err, comment) {
     if (err) { return next(err); }
-
     res.json(comment);
   });
 });
+
+// // upvote a comment
+// router.put('/posts/:post/comments/:comment/upvote', auth, function(req, res, next) {
+//   req.comment.upvote(function(err, comment){
+//     if (err) { return next(err); }
+
+//     res.json(comment);
+//   });
+// });
 
 
 // export router for use elsewhere

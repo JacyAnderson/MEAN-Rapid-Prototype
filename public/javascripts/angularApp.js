@@ -74,7 +74,9 @@ angular.module('news', ['ui.router'])
   	return $http.post('/posts/' + id + '/comments', comment);
   };
   
+  // UPDATE a posts upvotes
   object.upvoteComment = function(post, comment) {
+  	console.log('inside upvoteComment');
   	return $http.put('/posts/' + post._id + '/comments/'+ comment._id + '/upvote')
   	.success(function(data) {
   		comment.upvotes += 1;
@@ -90,7 +92,8 @@ angular.module('news', ['ui.router'])
 	function($scope, posts) {
 		$scope.test = 'Hello world!',
 		$scope.posts = posts.posts;
-
+    
+    // add Post and check if there is anything inputed 
 		$scope.addPost = function() {
 			if (!$scope.title || $scope.title === '') { return; }
 			posts.create({
@@ -108,6 +111,8 @@ angular.module('news', ['ui.router'])
 
  	}])
 
+
+// POSTS CONTROLLER
 .controller('PostsController', [
 	'$scope',
 	'posts',
@@ -120,7 +125,7 @@ angular.module('news', ['ui.router'])
     	if ($scope.body === '') { return; }
     	posts.addComment(post._id, {
     		body: $scope.body,
-    		link: 'user',
+    		author: 'user',
     	}).success(function(comment){
     		$scope.post.comments.push(comment);
     	});
@@ -129,7 +134,10 @@ angular.module('news', ['ui.router'])
 			$scope.body = "";
 		};
 
+
+    // add upvotes to comment
 		$scope.incrementUpvotes = function(comment) {
+			console.log('incrementing the upvotes');
 			posts.upvoteComment(post, comment);
 		};
 	}

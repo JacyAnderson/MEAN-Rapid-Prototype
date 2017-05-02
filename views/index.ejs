@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Dev Shop</title>
+	<title>Reddit Clone</title>
 
 	<!-- include bootstrap -->
 	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@
 	<!-- inline template for home.html-->
 	<script type="text/ng-template" id="/home.html">
 		<div class="page-header">
-			<h1>Dev Shop</h1>
+			<h1>Reddit Clone</h1>
 		</div>
 
 		<!-- Create upvotes-->
@@ -46,12 +46,12 @@
 				<a href="#/posts/{{post._id}}">Comments</a>
 			</span>
 		</div>
-    
-    <!-- on submit, runs addPost -->
+
+		<!-- on submit, runs addPost -->
 		<form ng-submit="addPost()" style="margin-top: 30px;">
 			<h3>Add new post</h3>
-      
-      <!-- Form to create posts -->
+
+			<!-- Form to create posts -->
 			<div class="form-group">
 				<input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
 			</div>
@@ -67,7 +67,7 @@
 		<div class="page-header">
 			<h3>
 				<a ng-show="post.link" 
-				="{{post.link}}">
+				href="{{post.link}}">
 				{{post.title}}
 			</a>
 			<span ng-hide="post.link">
@@ -76,6 +76,7 @@
 		</h3>
 	</div>
 
+  <!-- Adds comments to page -->
 	<div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
 		<span class="glyphicon glyphicon-thumbs-up"
 		ng-click="incrementUpvotes(comment)"></span>
